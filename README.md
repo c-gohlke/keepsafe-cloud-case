@@ -70,7 +70,7 @@ CMD ["npm","run", "deploy"]
 ```
 4) Build docker file and tag a name locally `docker build . -t "my-first-container:v0.0.1"`
 5) Checkout docker image exists `docker images`
-6) Run docker image locally `docker run my-first-container:v0.0.1`
+6) Run docker image locally `docker run -p 8080:8080 my-first-container:v0.0.1`
 7) Verify docker is server is running `docker ps`
 8) Call endpoints described above.
 

@@ -2,7 +2,7 @@ const express = require('express');
 const rentCalculations = require('./lib/rentCalculations');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
 const FixedInterest = process.env.INTEREST || 1.82;
 
