@@ -3,18 +3,14 @@ on:
   push:
     branches:
       - main
-jobs:
-  build:
-    name: Checkout
-    runs-on: ubuntu-latest
-    steps:
-      uses: actions/checkout@v3.0.0
-      uses: actions/setup-node@v2
-      with:
-        node-version: '16'
-    - run: npm install
-    - run: npm test
-    - run: docker build . -t "my-first-container:v0.0.1" 
-    - run: docker tag my-first-container:v0.0.1 clementgohlke/exellys-case:v1.0.0 # ${{github.event.head_commit.message}}
-    - run: docker push docker push clementgohlke/exellys-case:v1.0.0 #${{github.event.head_commit.message}}
+steps:
+  uses: actions/checkout@v3.0.0
+  uses: actions/setup-node@v2
+  with:
+    node-version: '16'
+- run: npm install
+- run: npm test
+- run: docker build . -t "my-first-container:v0.0.1" 
+- run: docker tag my-first-container:v0.0.1 clementgohlke/exellys-case:v1.0.0 # ${{github.event.head_commit.message}}
+- run: docker push docker push clementgohlke/exellys-case:v1.0.0 #${{github.event.head_commit.message}}
 
