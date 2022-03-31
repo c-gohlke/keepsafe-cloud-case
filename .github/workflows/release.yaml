@@ -3,8 +3,7 @@ on:
   push:
     branches:
       - main
-env:
-  SHOWCASE_ENV: lol
+      - master
 jobs:
   build:
     name: Deploy
