@@ -17,4 +17,5 @@ jobs:
       - run: npm test
       - run: docker build . -t "my-first-container:v0.0.1" 
       - run: docker tag my-first-container:v0.0.1 clementgohlke/exellys-case:v1.0.0 # ${{github.event.head_commit.message}}
+      - run: docker login -u clementgohlke -p ${{ secrets.DOCKER_HUB_TOKEN }}
       - run: docker push clementgohlke/exellys-case:v1.0.0 #${{github.event.head_commit.message}}
