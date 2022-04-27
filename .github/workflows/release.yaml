@@ -4,6 +4,7 @@ on:
     branches:
       - main
       - master
+      - frontend-v1
 jobs:
   build:
     name: Deploy
@@ -19,3 +20,11 @@ jobs:
       - run: docker tag my-first-container:v0.0.1 clementgohlke/exellys-case:${{github.run_attempt}}
       - run: docker login -u clementgohlke -p ${{ secrets.DOCKER_HUB_TOKEN }}
       - run: docker push clementgohlke/exellys-case:${{github.run_attempt}}
+  build-frontend:
+    name: buildFrontEnd
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.0.0
+      - run: docker build . -t "clementgohlke/keepsafe-cloud-case:${{github.run_attempt}}" 
+      - run: docker login -u clementgohlke -p ${{ secrets.DOCKER_HUB_TOKEN }}
+      - run: docker push clementgohlke/keepsafe-cloud-case:${{github.run_attempt}}
