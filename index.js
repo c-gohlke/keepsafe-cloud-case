@@ -6,6 +6,8 @@ const rentCalculations = require("./lib/rentCalculations");
 
 const app = express();
 var bodyParser = require("body-parser");
+// create application/x-www-form-urlencoded parser
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 const PORT = process.env.PORT || 8080;
 const mysql = require("mysql");
@@ -24,7 +26,6 @@ const config = {
   },
 };
 
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.get("/", (req, res) => {
   res.json({ success: true, message: "service up and running" });
@@ -101,7 +102,7 @@ app.get("/queryDatabase", (req, res) => {
   });
 });
 
-app.post("/insertDatabase", (req, res) => {
+app.post("/insertDatabase", urlencodedParser, (req, res) => {
   if (
     req.hasOwnProperty("body") &&
     req.body.hasOwnProperty("userID") &&
@@ -109,7 +110,6 @@ app.post("/insertDatabase", (req, res) => {
     req.body.hasOwnProperty("calculation") &&
     req.body.hasOwnProperty("filename")
   ) {
-    console.log(req.body)
     var conn = mysql.createConnection(config);
     conn.connect(function (err) {
       if (err) throw err;
