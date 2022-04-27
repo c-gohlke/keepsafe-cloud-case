@@ -25,6 +25,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3.0.0
-      - run: docker build . -t "clementgohlke/keepsafe-cloud-case:${{github.run_attempt}}" 
+      - run: docker build . -t "clementgohlke/keepsafe-cloud-case:${{github.run_attempt}}"
       - run: docker login -u clementgohlke -p ${{ secrets.DOCKER_HUB_TOKEN }}
       - run: docker push clementgohlke/keepsafe-cloud-case:${{github.run_attempt}}

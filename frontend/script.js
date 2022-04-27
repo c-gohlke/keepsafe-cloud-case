@@ -4,9 +4,9 @@ var registerForm = document.getElementById("form-register");
 var loginBtn = document.getElementById("login-btn");
 var registerBtn = document.getElementById("register-btn");
 
-if(loginBtn && registerBtn){
-loginBtn.addEventListener("click", toggleLoginForm);
-registerBtn.addEventListener("click", toggleRegisterForm);
+if (loginBtn && registerBtn) {
+  loginBtn.addEventListener("click", toggleLoginForm);
+  registerBtn.addEventListener("click", toggleRegisterForm);
 }
 
 function toggleLoginForm() {
