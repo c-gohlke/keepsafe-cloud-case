@@ -6,4 +6,3 @@ image:
   repository: yourrepo
   tag: versiontag
   pullPolicy: Always
-
