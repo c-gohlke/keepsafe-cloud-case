@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.frontend.Name }}
+  name: {{ .Values.frontend.name }}
   labels:
-    app: {{ .Values.frontend.Name }}
+    app: {{ .Values.frontend.name }}
 spec:
   replicas: {{ .Values.frontend.replicaCount }}
   selector:
     matchLabels:
-      app: {{ .Values.frontend.Name }}
+      app: {{ .Values.frontend.name }}
   template:
     metadata:
       labels:
-        app: {{ .Values.frontend.Name }}
+        app: {{ .Values.frontend.name }}
     spec:
       containers:
-        - name: {{ .Values.frontend.Name }}
+        - name: {{ .Values.frontend.name }}
           image: "{{ .Values.frontend.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
