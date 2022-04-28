@@ -105,7 +105,7 @@ app.put("/reinitDatabase", (req, res) => {
 });
 
 app.delete("/deleteUserdata", (req, res) => {
-  if (req.query.uid !== undefined) {
+  if (req.query.userID !== undefined) {
     var userID = req.query.userID;
     var conn = mysql.createConnection(config);
     conn.connect(function (err) {
@@ -119,7 +119,7 @@ app.delete("/deleteUserdata", (req, res) => {
       message: "deleted user data for user ${userID}",
     });
   } else {
-    res.json({ success: true, message: "uid undefined" });
+    res.json({ success: true, message: "userID undefined" });
   }
 });
 
