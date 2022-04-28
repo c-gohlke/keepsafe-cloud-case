@@ -120,3 +120,9 @@ Helm is a package manager for kubernetes.
 2. Generate kubernetes yaml files from template
 3. Play with the values.yaml file.
 4. Go crazy and set up your first aks cluster in azure and deploy the charts.
+
+http://localhost:8080/history
+//http://localhost:8080/insertDatabase using postman post
+http://localhost:8080/reinitDatabase?uid=0
+http://localhost:8080/deleteUserdata?uid=0
+http://localhost:8080/history?uid=0
