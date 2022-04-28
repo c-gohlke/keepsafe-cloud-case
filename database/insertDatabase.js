@@ -1,7 +1,27 @@
-function insertDatabase(conn, userID, timestamp, calculation, filename) {
+function insertDatabase(
+  conn,
+  userID,
+  timestamp,
+  calculation,
+  filename,
+  isMonthly,
+  cost,
+  length,
+  interest
+) {
+  console.log("Database inserted");
   conn.query(
-    "INSERT INTO calculations (userID, timestamp, calculation, filename) VALUES (?, ?, ?, ?);",
-    [userID, timestamp, calculation, filename],
+    "INSERT INTO calculations (userID, timestamp, calculation, filename, isMonthly, cost, length, interest) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
+    [
+      userID,
+      timestamp,
+      calculation,
+      filename,
+      isMonthly,
+      cost,
+      length,
+      interest,
+    ],
     function (err, results, fields) {
       if (err) throw err;
       else console.log("Inserted " + results.affectedRows + " row(s).");

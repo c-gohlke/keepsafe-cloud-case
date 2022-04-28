@@ -1,9 +1,11 @@
 const reinitDatabase = require("./database/reinitDatabase.js");
 const insertDatabase = require("./database/insertDatabase.js");
 const deleteUserdata = require("./database/deleteUserdata.js");
+
 const readData = require("./database/readData.js");
 const express = require("express");
 const rentCalculations = require("./lib/rentCalculations");
+const cors = require("cors");
 
 const app = express();
 var bodyParser = require("body-parser");
@@ -26,6 +28,8 @@ const config = {
     ca: serverCa,
   },
 };
+
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
@@ -74,17 +78,8 @@ app.get("/history", (req, res) => {
     else {
       const dataPromise = readData.readData(conn, userID);
       dataPromise.then((rows) => {
-        for (r in rows) {
-          const result = Object.values(JSON.parse(JSON.stringify(rows)));
-          result.forEach((v) => {
-            userHist.push({
-              timestamp: v.timestamp,
-              calculation: v.calculation,
-              file: v.filename,
-            });
-          });
-        }
-        res.json({ success: true, userHist });
+        const result = Object.values(JSON.parse(JSON.stringify(rows)));
+        res.json({ success: true, result: result });
       });
     }
   });
@@ -102,7 +97,7 @@ app.put("/reinitDatabase", (req, res) => {
 });
 
 app.delete("/deleteUserdata", (req, res) => {
-  if (req.query.uid !== undefined) {
+  if (req.query.userID !== undefined) {
     var userID = req.query.userID;
     var conn = mysql.createConnection(config);
     conn.connect(function (err) {
@@ -116,7 +111,7 @@ app.delete("/deleteUserdata", (req, res) => {
       message: "deleted user data for user ${userID}",
     });
   } else {
-    res.json({ success: true, message: "uid undefined" });
+    res.json({ success: true, message: "userID undefined" });
   }
 });
 
@@ -125,19 +120,41 @@ app.post("/insertDatabase", urlencodedParser, (req, res) => {
     req.hasOwnProperty("body") &&
     req.body.hasOwnProperty("userID") &&
     req.body.hasOwnProperty("timestamp") &&
-    req.body.hasOwnProperty("calculation") &&
-    req.body.hasOwnProperty("filename")
+    req.body.hasOwnProperty("cost") &&
+    req.body.hasOwnProperty("length") &&
+    req.body.hasOwnProperty("interest") &&
+    req.body.hasOwnProperty("filename") &&
+    req.body.hasOwnProperty("isMonthly") &&
+    (req.body.isMonthly == 0 || req.body.isMonthly == 1)
   ) {
     var conn = mysql.createConnection(config);
     conn.connect(function (err) {
       if (err) throw err;
       else {
+        var calculation;
+        if (req.body.isMonthly == 0) {
+          calculation = rentCalculations.calculateTotalRent(
+            req.body.cost,
+            req.body.length,
+            req.body.interest
+          );
+        } else if (req.body.isMonthly == 1) {
+          calculation = rentCalculations.calculateMonthlyPayment(
+            req.body.cost,
+            req.body.length,
+            req.body.interest
+          );
+        }
         insertDatabase.insertDatabase(
           conn,
           req.body.userID,
           req.body.timestamp,
-          req.body.calculation,
-          req.body.filename
+          calculation,
+          req.body.filename,
+          req.body.isMonthly,
+          req.body.cost,
+          req.body.length,
+          req.body.interest
         );
       }
     });

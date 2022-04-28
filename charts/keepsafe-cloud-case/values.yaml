@@ -18,4 +18,7 @@ frontend:
     tag: 1
     pullPolicy: Always
   containerPort: 80
+<<<<<<< HEAD
   externalPort: 80
+=======
+>>>>>>> 3f19b4d43507790618f759bedca8d435326501be
