@@ -6,7 +6,7 @@ backend:
   replicaCount: 1
   image:
     repository: clementgohlke/keepsafe-backend
-    tag: 1
+    tag: 16
     pullPolicy: Always
   containerPort: 8080
   externalPort: 8080
@@ -15,10 +15,7 @@ frontend:
   replicaCount: 1
   image:
     repository: clementgohlke/keepsafe-frontend
-    tag: 1
+    tag: 16
     pullPolicy: Always
   containerPort: 80
-<<<<<<< HEAD
   externalPort: 80
-=======
->>>>>>> 3f19b4d43507790618f759bedca8d435326501be
