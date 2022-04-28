@@ -62,10 +62,10 @@ app.get("/totalRent", (req, res) => {
 
 app.get("/history", (req, res) => {
   var userID;
-  if (req.query.uid == undefined) {
+  if (req.query.userID == undefined) {
     userID = 0;
   } else {
-    userID = req.query.uid;
+    userID = req.query.userID;
   }
   var conn = mysql.createConnection(config);
   var userHist = [];
@@ -90,7 +90,7 @@ app.get("/history", (req, res) => {
   });
 });
 
-app.get("/reinitDatabase", (req, res) => {
+app.put("/reinitDatabase", (req, res) => {
   var conn = mysql.createConnection(config);
   conn.connect(function (err) {
     if (err) throw err;
@@ -103,7 +103,7 @@ app.get("/reinitDatabase", (req, res) => {
 
 app.delete("/deleteUserdata", (req, res) => {
   if (req.query.uid !== undefined) {
-    var userID = req.query.uid;
+    var userID = req.query.userID;
     var conn = mysql.createConnection(config);
     conn.connect(function (err) {
       if (err) throw err;
