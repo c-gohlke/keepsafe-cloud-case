@@ -1,6 +1,7 @@
 const reinitDatabase = require("./database/reinitDatabase.js");
 const insertDatabase = require("./database/insertDatabase.js");
 const deleteUserdata = require("./database/deleteUserdata.js");
+
 const readData = require("./database/readData.js");
 const express = require("express");
 const rentCalculations = require("./lib/rentCalculations");
@@ -78,7 +79,7 @@ app.get("/history", (req, res) => {
       const dataPromise = readData.readData(conn, userID);
       dataPromise.then((rows) => {
         const result = Object.values(JSON.parse(JSON.stringify(rows)));
-        res.json({ success: true, result });
+        res.json({ success: true, result: result });
       });
     }
   });
@@ -119,21 +120,41 @@ app.post("/insertDatabase", urlencodedParser, (req, res) => {
     req.hasOwnProperty("body") &&
     req.body.hasOwnProperty("userID") &&
     req.body.hasOwnProperty("timestamp") &&
-    req.body.hasOwnProperty("calculation") &&
+    req.body.hasOwnProperty("cost") &&
+    req.body.hasOwnProperty("length") &&
+    req.body.hasOwnProperty("interest") &&
     req.body.hasOwnProperty("filename") &&
-    req.body.hasOwnProperty("isMonthly")
+    req.body.hasOwnProperty("isMonthly") &&
+    (req.body.isMonthly == 0 || req.body.isMonthly == 1)
   ) {
     var conn = mysql.createConnection(config);
     conn.connect(function (err) {
       if (err) throw err;
       else {
+        var calculation;
+        if (req.body.isMonthly == 0) {
+          calculation = rentCalculations.calculateTotalRent(
+            req.body.cost,
+            req.body.length,
+            req.body.interest
+          );
+        } else if (req.body.isMonthly == 1) {
+          calculation = rentCalculations.calculateMonthlyPayment(
+            req.body.cost,
+            req.body.length,
+            req.body.interest
+          );
+        }
         insertDatabase.insertDatabase(
           conn,
           req.body.userID,
           req.body.timestamp,
-          req.body.calculation,
+          calculation,
           req.body.filename,
-          req.body.isMonthly
+          req.body.isMonthly,
+          req.body.cost,
+          req.body.length,
+          req.body.interest
         );
       }
     });
