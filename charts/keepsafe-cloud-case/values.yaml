@@ -9,6 +9,7 @@ backend:
     tag: 1
     pullPolicy: Always
   containerPort: 8080
+  externalPort: 8080
 frontend:
   name: keepsafe-cloud-frontend
   replicaCount: 1
@@ -17,3 +18,4 @@ frontend:
     tag: 1
     pullPolicy: Always
   containerPort: 80
+  externalPort: 80
