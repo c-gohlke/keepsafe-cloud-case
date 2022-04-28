@@ -9,7 +9,7 @@ function insertDatabase(
   console.log("Database inserted");
   conn.query(
     "INSERT INTO calculations (userID, timestamp, calculation, filename, isMonthly) VALUES (?, ?, ?, ?, ?);",
-    [userID, timestamp, calculation, filename],
+    [userID, timestamp, calculation, filename, isMonthly],
     function (err, results, fields) {
       if (err) throw err;
       else console.log("Inserted " + results.affectedRows + " row(s).");
