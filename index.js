@@ -32,7 +32,7 @@ const config = {
 app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.get("/", (req, res) => {
+app.get("/api/", (req, res) => {
   res.json({ success: true, message: "service up and running" });
 });
 
