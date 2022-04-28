@@ -32,15 +32,15 @@ const config = {
 app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.get("/", (req, res) => {
+app.get("/api/", (req, res) => {
   res.json({ success: true, message: "service up and running" });
 });
 
-app.get("/health", (req, res) => {
+app.get("/api/health", (req, res) => {
   res.json({ success: true, message: "all services healthy" });
 });
 
-app.get("/monthlyPayment", (req, res) => {
+app.get("/api/monthlyPayment", (req, res) => {
   const amount = req.query.amount || 20000;
   const length = (req.query.years || 20) * 12;
 
@@ -52,7 +52,7 @@ app.get("/monthlyPayment", (req, res) => {
   res.json({ success: true, monthlyPayment });
 });
 
-app.get("/totalRent", (req, res) => {
+app.get("/api/totalRent", (req, res) => {
   const amount = req.query.amount || 20000;
   const length = (req.query.years || 20) * 12;
 
@@ -64,7 +64,7 @@ app.get("/totalRent", (req, res) => {
   res.json({ success: true, totalRent });
 });
 
-app.get("/history", (req, res) => {
+app.get("/api/history", (req, res) => {
   var userID;
   if (req.query.userID == undefined) {
     userID = 0;
@@ -85,7 +85,7 @@ app.get("/history", (req, res) => {
   });
 });
 
-app.put("/reinitDatabase", (req, res) => {
+app.put("/api/reinitDatabase", (req, res) => {
   var conn = mysql.createConnection(config);
   conn.connect(function (err) {
     if (err) throw err;
@@ -115,7 +115,7 @@ app.delete("/deleteUserdata", (req, res) => {
   }
 });
 
-app.post("/insertDatabase", urlencodedParser, (req, res) => {
+app.post("/api/insertDatabase", urlencodedParser, (req, res) => {
   if (
     req.hasOwnProperty("body") &&
     req.body.hasOwnProperty("userID") &&
