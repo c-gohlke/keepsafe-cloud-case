@@ -12,7 +12,7 @@ backend:
   externalPort: 8080
 frontend:
   name: keepsafe-cloud-frontend
-  replicaCount: 16
+  replicaCount: 1
   image:
     repository: clementgohlke/keepsafe-frontend
     tag: 16
