@@ -17,6 +17,6 @@ jobs:
       - run: npm install
       - run: npm test
       - run: docker build . -t "my-first-container:v0.0.1"
-      - run: docker tag my-first-container:v0.0.1 clementgohlke/keepsafe-backend:${{github.run_attempt}}
+      - run: docker tag my-first-container:v0.0.1 clementgohlke/keepsafe-backend:26
       - run: docker login -u clementgohlke -p ${{ secrets.DOCKER_HUB_TOKEN }}
-      - run: docker push clementgohlke/keepsafe-backend:${{github.run_attempt}}
+      - run: docker push clementgohlke/keepsafe-backend:26
