@@ -129,7 +129,8 @@ app.post("/insertDatabase", urlencodedParser, (req, res) => {
     req.body.hasOwnProperty("userID") &&
     req.body.hasOwnProperty("timestamp") &&
     req.body.hasOwnProperty("calculation") &&
-    req.body.hasOwnProperty("filename")
+    req.body.hasOwnProperty("filename") &&
+    req.body.hasOwnProperty("isMonthly")
   ) {
     var conn = mysql.createConnection(config);
     conn.connect(function (err) {
@@ -140,7 +141,8 @@ app.post("/insertDatabase", urlencodedParser, (req, res) => {
           req.body.userID,
           req.body.timestamp,
           req.body.calculation,
-          req.body.filename
+          req.body.filename,
+          req.body.isMonthly
         );
       }
     });

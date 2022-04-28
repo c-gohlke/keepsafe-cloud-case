@@ -7,7 +7,7 @@ function reinitDatabase(conn) {
     }
   );
   conn.query(
-    "CREATE TABLE calculations (id serial PRIMARY KEY, userID INTEGER, timestamp VARCHAR(50), calculation INTEGER, filename VARCHAR(50));",
+    "CREATE TABLE calculations (id serial PRIMARY KEY, userID INTEGER, timestamp VARCHAR(50), calculation INTEGER, filename VARCHAR(50), isMonthly INTEGER);",
     function (err, results, fields) {
       if (err) throw err;
       console.log("Created calculations table.");

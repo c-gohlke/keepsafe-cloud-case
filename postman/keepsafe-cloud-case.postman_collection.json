@@ -146,7 +146,7 @@
           "urlencoded": []
         },
         "url": {
-          "raw": "{{KEEPSAFE_ENV}}/history?userID=0",
+          "raw": "{{KEEPSAFE_ENV}}/?userID=0",
           "host": ["{{KEEPSAFE_ENV}}"],
           "path": [""],
           "query": [
