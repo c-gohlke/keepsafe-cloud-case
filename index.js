@@ -4,6 +4,7 @@ const deleteUserdata = require("./database/deleteUserdata.js");
 const readData = require("./database/readData.js");
 const express = require("express");
 const rentCalculations = require("./lib/rentCalculations");
+const cors = require("cors");
 
 const app = express();
 var bodyParser = require("body-parser");
@@ -26,6 +27,8 @@ const config = {
     ca: serverCa,
   },
 };
+
+app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
