@@ -1,11 +1,14 @@
 # Default values for node projects.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-replicaCount: 1
-image:
-  repository: clementgohlke/keepsafe-backend
-  tag: 1
-  pullPolicy: Always
+backend:
+  name: keepsafe-cloud-backend
+  replicaCount: 1
+  image:
+    repository: clementgohlke/keepsafe-backend
+    tag: 1
+    pullPolicy: Always
+  containerPort: 8080
 frontend:
   name: keepsafe-cloud-frontend
   replicaCount: 1
@@ -13,3 +16,4 @@ frontend:
     repository: clementgohlke/keepsafe-frontend
     tag: 1
     pullPolicy: Always
+  containerPort: 80
