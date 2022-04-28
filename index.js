@@ -77,17 +77,8 @@ app.get("/history", (req, res) => {
     else {
       const dataPromise = readData.readData(conn, userID);
       dataPromise.then((rows) => {
-        for (r in rows) {
-          const result = Object.values(JSON.parse(JSON.stringify(rows)));
-          result.forEach((v) => {
-            userHist.push({
-              timestamp: v.timestamp,
-              calculation: v.calculation,
-              file: v.filename,
-            });
-          });
-        }
-        res.json({ success: true, userHist });
+        const result = Object.values(JSON.parse(JSON.stringify(rows)));
+        res.json({ success: true, result });
       });
     }
   });
