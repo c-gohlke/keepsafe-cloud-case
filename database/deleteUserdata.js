@@ -1,7 +1,7 @@
-function deleteData(conn) {
+function deleteUserdata(conn, userID) {
   conn.query(
     "DELETE FROM calculations WHERE userID = ?",
-    [0],
+    [userID],
     function (err, results, fields) {
       if (err) throw err;
       else console.log("Deleted " + results.affectedRows + " row(s).");
@@ -14,5 +14,5 @@ function deleteData(conn) {
 }
 
 module.exports = {
-  deleteData,
+  deleteUserdata,
 };

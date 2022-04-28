@@ -1,5 +1,6 @@
-const queryDatabase = require("./database/queryDatabase.js");
+const reinitDatabase = require("./database/reinitDatabase.js");
 const insertDatabase = require("./database/insertDatabase.js");
+const deleteUserdata = require("./database/deleteUserdata.js");
 const readData = require("./database/readData.js");
 const express = require("express");
 const rentCalculations = require("./lib/rentCalculations");
@@ -7,7 +8,7 @@ const rentCalculations = require("./lib/rentCalculations");
 const app = express();
 var bodyParser = require("body-parser");
 // create application/x-www-form-urlencoded parser
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+var urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 const PORT = process.env.PORT || 8080;
 const mysql = require("mysql");
@@ -26,7 +27,7 @@ const config = {
   },
 };
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.get("/", (req, res) => {
   res.json({ success: true, message: "service up and running" });
 });
@@ -44,7 +45,6 @@ app.get("/monthlyPayment", (req, res) => {
     length,
     FixedInterest
   );
-
   res.json({ success: true, monthlyPayment });
 });
 
@@ -57,12 +57,10 @@ app.get("/totalRent", (req, res) => {
     length,
     FixedInterest
   );
-
   res.json({ success: true, totalRent });
 });
 
 app.get("/history", (req, res) => {
-  //http://localhost:8080/history?uid=0
   var userID;
   if (req.query.uid == undefined) {
     userID = 0;
@@ -92,14 +90,34 @@ app.get("/history", (req, res) => {
   });
 });
 
-app.get("/queryDatabase", (req, res) => {
+app.get("/reinitDatabase", (req, res) => {
   var conn = mysql.createConnection(config);
   conn.connect(function (err) {
     if (err) throw err;
     else {
-      queryDatabase.queryDatabase(conn);
+      reinitDatabase.reinitDatabase(conn);
     }
   });
+  res.json({ success: true, message: "Database reinitialized" });
+});
+
+app.delete("/deleteUserdata", (req, res) => {
+  if (req.query.uid !== undefined) {
+    var userID = req.query.uid;
+    var conn = mysql.createConnection(config);
+    conn.connect(function (err) {
+      if (err) throw err;
+      else {
+        deleteUserdata.deleteUserdata(conn, userID);
+      }
+    });
+    res.json({
+      success: true,
+      message: "deleted user data for user ${userID}",
+    });
+  } else {
+    res.json({ success: true, message: "uid undefined" });
+  }
 });
 
 app.post("/insertDatabase", urlencodedParser, (req, res) => {
@@ -122,6 +140,13 @@ app.post("/insertDatabase", urlencodedParser, (req, res) => {
           req.body.filename
         );
       }
+    });
+    res.json({ success: true, message: "data inserted to DB" });
+  } else {
+    res.json({
+      success: true,
+      message:
+        "undefined body parameters (userID, timestamp, calculation, filename)",
     });
   }
 });

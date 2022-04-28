@@ -1,5 +1,4 @@
-function queryDatabase(conn) {
-  // return new Promise(function (resolve, reject) {
+function reinitDatabase(conn) {
   conn.query(
     "DROP TABLE IF EXISTS calculations;",
     function (err, results, fields) {
@@ -30,9 +29,8 @@ function queryDatabase(conn) {
       console.log("Inserted " + results.affectedRows + " row(s).");
     }
   );
-  // });
 }
 
 module.exports = {
-  queryDatabase,
+  reinitDatabase,
 };
