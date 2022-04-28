@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.frontend.Name }}
+  labels:
+    app: {{ .Values.frontend.Name }}
+spec:
+  replicas: {{ .Values.frontend.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.frontend.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.frontend.Name }}
+    spec:
+      containers:
+        - name: {{ .Values.frontend.Name }}
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}

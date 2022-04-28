@@ -3,6 +3,13 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: yourrepo
-  tag: versiontag
+  repository: clementgohlke/keepsafe-backend
+  tag: 1
   pullPolicy: Always
+frontend:
+  name: keepsafe-cloud-frontend
+  replicaCount: 1
+  image:
+    repository: clementgohlke/keepsafe-frontend
+    tag: 1
+    pullPolicy: Always
